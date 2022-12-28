@@ -13,7 +13,7 @@ export default class Arquivo {
         await db.query(`INSERT INTO arquivo (identificador, file, data) VALUES ($1, $2, $3);`, [
 
             identificador,
-            file.values(),
+            file,
             new Date().toLocaleDateString()
 
         ])
@@ -38,27 +38,41 @@ export default class Arquivo {
 
         if (identificador) {
 
-            arquivos = (await db.query("SELECT id, identificador, file, to_char(data, 'dd/MM/yyyy') FROM arquivo WHERE identificador = $1 ORDER BY id ASC;",[identificador])).rows
+            arquivos = (await db.query("SELECT id, identificador, file, to_char(data, 'dd/MM/yyyy') as data FROM arquivo WHERE identificador = $1 ORDER BY id ASC;",[identificador])).rows
 
         } else {
 
-            arquivos = (await db.query("SELECT id, identificador, file, to_char(data, 'dd/MM/yyyy') FROM arquivo ORDER BY id ASC;")).rows
-
+            arquivos = (await db.query("SELECT id, identificador, file, to_char(data, 'dd/MM/yyyy') as data FROM arquivo ORDER BY id ASC;")).rows
+ 
         }
 
         return arquivos
 
     }
 
-    async init() {
+    async getFile(id:number) {
+
+        return (await db.query("SELECT identificador, file FROM arquivo WHERE id = $1;",[id])).rows[0] as {identificador:string,file:Buffer}
+
+    }
+    
+    async remove(id:number) {
+
+        const identificador = String(await (await db.query(`delete from arquivo where id = ${id} returning identificador`)).rows[0].identificador)
+
+        return identificador
+
+    }
+
+    static async init() {
 
         await db.query(`
             CREATE TABLE IF NOT EXISTS arquivo (
 
-                id integer NOT NULL PRIMARY KEY,
+                id serial NOT NULL PRIMARY KEY,
                 identificador character varying(100) NOT NULL,
-                file bytea[] NOT NULL,
-                data date NOT NULL,
+                file bytea NOT NULL,
+                data date NOT NULL
 
             )
         `)

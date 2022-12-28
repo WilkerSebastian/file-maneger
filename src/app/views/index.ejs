@@ -1,8 +1,22 @@
-<form action="/salvar/arquivo" method="post" enctype="multipart/form-data" class="w-75 mt-5 mx-auto d-flex">
-    <div class="input-group mb-3">
-        <label class="input-group-text" for="identificador">identificador</label>
-        <input type="text" class="form-control" id="identificador" name="identificador">
-        <input type="file" class="form-control" id="file" name="file">
-    </div>
-    <input type="submit" value="salvar" class="btn btn-primary mx-3 h-25">
-</form>
+<div class="w-75 mt-5 mx-auto">
+
+    <h1 class="text-light">Adicionar imagem (.png)</h1>
+    <form action="/salvar/arquivo" method="post" enctype="multipart/form-data" class="d-flex">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="identificador">identificador</label>
+            <input type="text" class="form-control" id="identificador" name="identificador">
+            <input type="file" class="form-control" id="file" name="file">
+        </div>
+        <input type="submit" value="salvar" class="btn btn-primary mx-3 h-25">
+    </form>
+
+</div>
+<div class="w-75 mx-auto">
+    <h1 class="mt-5 text-light">Pesquisa por identificador</h1>
+    
+    <form action="buscar" class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="identificador" aria-label="Search" name="identificador" id="identificador">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+
+</div>

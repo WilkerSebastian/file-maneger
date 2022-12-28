@@ -21,6 +21,7 @@ export default class App {
         this.server.set('views', resolve("./src/app/views"));
         this.server.set('view engine', 'ejs');
 
+        this.server.use("/jquery", express.static('./node_modules/jquery/dist'))
         this.server.use('/bootstrap', express.static('./node_modules/bootstrap/dist'))
         this.server.use('/public', express.static('./src/app/public'))
 

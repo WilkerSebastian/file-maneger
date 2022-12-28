@@ -1,0 +1,35 @@
+<table class="table text-light">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">identificador</th>
+        <th scope="col">arquivo</th>
+        <th scope="col">data</th>
+        <th scope="col">baixar</th>
+        <th scope="col">remover</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        <% if (arquivos.length > 0) { %>
+
+          <% arquivos.forEach(arquivo => { %>
+            <tr>
+                <th scope="row"><%=arquivo.id %></th>
+                <td><%=arquivo.identificador %></td>
+                <td><img class="img-table" src="data:image/png;base64,<%=arquivo.file.toString("base64")%>"></td>
+                <td><%= arquivo.data %></td>
+                <td><img class="img-table img-link" src="/public/img/download.png" alt="/data/file/<%= arquivo.id %>"></td>
+                <td><img class="img-table img-link" src="/public/img/deletar.png" alt="/deletar/file/<%= arquivo.id %> "></td>
+              </tr>
+          <% }) %>
+         
+        <% } else {%>
+
+          <span>sem registros</span>
+
+        <% } %> 
+        
+    </tbody>
+  </table>
+
+  <a href="/" class="btn btn-danger mx-auto">voltar</a>
